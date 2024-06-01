@@ -10,6 +10,6 @@ FROM openjdk:18-jdk-slim
 
 WORKDIR /app
 
-COPY --from=build /app/build/libs/*.jar /app/libs/auto-downloader.jar
+COPY --from=build /app/build/libs/*.jar /app/libs/folder-watcher.jar
 
-ENTRYPOINT ["java", "-jar", "/app/libs/auto-downloader.jar"]
+ENTRYPOINT ["java", "-jar", "/app/libs/folder-watcher.jar"]
