@@ -1,4 +1,4 @@
-package com.github.nejer6
+package com.github
 
 import java.io.File
 import java.nio.file.FileSystems
