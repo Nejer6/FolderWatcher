@@ -1,6 +1,6 @@
 plugins {
-    application
     kotlin("jvm") version "1.9.23"
+    application
 }
 
 group = "com.github.nejer6"
@@ -21,12 +21,20 @@ kotlin {
     jvmToolchain(18)
 }
 
-application {
-    mainClass.set("MainKt")
-}
+tasks.register<Jar>("fatJar") {
+    group = "build"
+    description = "Assembles a fat JAR including all dependencies."
 
-tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = "MainKt"
     }
+
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+
+    archiveFileName.set("my-application-all.jar")
 }
